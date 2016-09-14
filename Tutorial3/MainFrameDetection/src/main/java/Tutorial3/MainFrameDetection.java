@@ -1,5 +1,6 @@
 package Tutorial3;
 
+import org.apache.commons.io.FileUtils;
 import org.openimaj.feature.local.list.LocalFeatureList;
 import org.openimaj.feature.local.matcher.FastBasicKeypointMatcher;
 import org.openimaj.feature.local.matcher.LocalFeatureMatcher;
@@ -36,7 +37,7 @@ public class MainFrameDetection {
     private String path;
     private int numberImages = 0;
     private int afterImages = 0;
-    private boolean hasRun = true;
+    private boolean hasRun = false;
 
 
     public MainFrameDetection(String path){
@@ -80,8 +81,8 @@ public class MainFrameDetection {
             timeStamp.add(video.getTimeStamp());
         }
 
-        System.out.println("The total frames are:" + j
-        );
+        System.out.println("The total frames are:" + j);
+        numberImages = j;
     }
 
 
@@ -137,9 +138,7 @@ public class MainFrameDetection {
         /*SparkConf sparkConf = new SparkConf().setMaster("local").setAppName("MainFrame");
         JavaSparkContext sc = new JavaSparkContext(sparkConf);
         sc.setLogLevel("FATAL");
-
         JavaRDD<MBFImage> imagesRDD = sc.parallelize(imageList);
-
         List<Tuple2<MBFImage,MBFImage>> imageCompare = new ArrayList<Tuple2<MBFImage,MBFImage>>();
         for (int i=0; i<imageList.size() - 1; i++){
             MBFImage image1 = imageList.get(i);
@@ -148,7 +147,7 @@ public class MainFrameDetection {
         }*/
 
 
-          for (int i=0; i<imageList.size() - 1; i++)
+        for (int i=0; i<imageList.size() - 1; i++)
         {
             System.out.println("ImageList we on = " + i);
             MBFImage image1 = imageList.get(i);
@@ -217,7 +216,6 @@ public class MainFrameDetection {
                  //   System.out.println(s);
                 //}
                 //System.out.println(files[i].getName().split("_")[1].split(".") + "   cats");
-
                 double f1 = Double.parseDouble(files[i].getName().split("_")[1].split(".jpg")[0]);
                 double f2 = Double.parseDouble(files[i + 1].getName().split("_")[1].split(".jpg")[0]);
                 if (f2 < f1) {
@@ -227,7 +225,6 @@ public class MainFrameDetection {
                     i = 0;
                 }
             }
-
             //need to add a delete directory if images function to this.
             //grab images until greater than lowerbound that have all same sensitivity
             for(int i = 0; i < lowBound; i++){
@@ -275,9 +272,8 @@ public class MainFrameDetection {
 
     /*
     sets an upper bound and a lower bound for number of frames to get.
-    also, input # of seconds original video is, to determine FPS rate
      */
-    public int MainFrames(int lowBound, int upperBound){
+    public void MainFrames(int lowBound, int upperBound){
 
         if(!hasRun){
             //this will find all the similarities, we can pick which ones we don't want later
@@ -297,6 +293,14 @@ public class MainFrameDetection {
 
             double candSens = Double.parseDouble(files[lowBound-1].getName().split("_")[1].split(".jpg")[0]);
 
+            File realFrames = new File("output/realFrames");
+            try {
+                FileUtils.cleanDirectory(realFrames);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             for(int i = 0; i < files.length; i++){
                 double test = Double.parseDouble(files[i].getName().split("_")[1].split(".jpg")[0]);
                 if(test <= candSens){
@@ -310,13 +314,14 @@ public class MainFrameDetection {
                         e.printStackTrace();
                     }
                     afterImages++;
+                    System.out.println(afterImages);
                     if(afterImages == upperBound){
+                        System.out.println("ending it");
                         i = files.length;
                     }
                 }
             }
         }
-    return imageList.size();
     }
 
     public void sethasRun(Boolean t){
