@@ -45,4 +45,23 @@ public class VideoReConsc {
             DisplayUtilities.displayName(image, "videoFrames");
         }
     }
+
+    public static void createOriginal(File path) throws IOException {
+        File[] files = path.listFiles();
+        //this gets the images to play in order.
+        //quick to write and inefficient but the number of key frames should be small
+        //so it's pretty okay to do.
+
+
+        for (int i = 0; i < files.length; i++) {
+
+            System.out.println(files[i].getName());
+
+            MBFImage image = ImageUtilities.readMBF(files[i]);
+
+            //image.drawText("Wild Life", 90, 150, HersheyFont.ASTROLOGY, 20, RGBColour.BLACK);
+
+            DisplayUtilities.displayName(image, "videoFrames");
+        }
+    }
 }

@@ -16,18 +16,27 @@ public class Main {
         //set true if you have all ready found the similarities of frames
         mFD.sethasRun(true);
         mFD.MainFrames(20,30);
-        File reconFile = new File("output/realframes");
         VideoReConsc vr = new VideoReConsc();
+
+        long startTime = System.currentTimeMillis();
+
+        File originalFile = new File("output/frames");
+        vr.createOriginal(originalFile);
+
+        long endTime = System.currentTimeMillis();
+
+        long startTime2 = System.currentTimeMillis();
+
+        File reconFile = new File("output/realFrames");
         vr.createVideo(reconFile);
 
-        int originalTime = 14;
-        int original = mFD.getNumberImages();
-        double fps = original / originalTime;
-        int after = mFD.getAfterImages();
-        int afterTime = (int) (after / fps);
+        long endTime2 = System.currentTimeMillis();
 
-        System.out.println("The original video had "+original+" frames and ran for about "+originalTime+" seconds.");
-        System.out.println("The new video has "+after+" frames and runs for about "+afterTime+" seconds");
+        int original = mFD.getNumberImages();
+        int after = mFD.getAfterImages();
+
+        System.out.println("The original image had " + original + " frames and took " + (endTime-startTime)
+                + " milli seconds and our new video had " + after + " frames and took " + (endTime2-startTime2) + " milli seconds");
     }
 
 }
