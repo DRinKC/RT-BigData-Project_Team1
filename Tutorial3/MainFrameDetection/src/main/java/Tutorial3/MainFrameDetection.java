@@ -80,7 +80,8 @@ public class MainFrameDetection {
             timeStamp.add(video.getTimeStamp());
         }
 
-        System.out.println("The total frames are:" + j);
+        System.out.println("The total frames are:" + j
+        );
     }
 
 
@@ -274,8 +275,9 @@ public class MainFrameDetection {
 
     /*
     sets an upper bound and a lower bound for number of frames to get.
+    also, input # of seconds original video is, to determine FPS rate
      */
-    public void MainFrames(int lowBound, int upperBound){
+    public int MainFrames(int lowBound, int upperBound){
 
         if(!hasRun){
             //this will find all the similarities, we can pick which ones we don't want later
@@ -314,6 +316,7 @@ public class MainFrameDetection {
                 }
             }
         }
+    return imageList.size();
     }
 
     public void sethasRun(Boolean t){

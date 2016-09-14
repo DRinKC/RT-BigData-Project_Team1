@@ -17,7 +17,7 @@ public class VideoReConsc {
 
     }
 
-    public static void createVideo(File path) throws IOException {
+    public static void createVideo(File path, double fps) throws IOException {
         File[] files = path.listFiles();
         //this gets the images to play in order.
         //quick to write and inefficient but the number of key frames should be small
@@ -44,5 +44,9 @@ public class VideoReConsc {
 
             DisplayUtilities.displayName(image, "videoFrames");
         }
+
+        int newFrames = files.length;
+        double newTime = newFrames / fps;
+        System.out.println("The new video has "+newFrames+" frames and runs for about "+newTime+" seconds.");
     }
 }
