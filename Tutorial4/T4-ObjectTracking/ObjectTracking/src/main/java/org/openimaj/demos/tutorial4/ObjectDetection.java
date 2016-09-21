@@ -7,6 +7,7 @@ import org.openimaj.feature.local.list.LocalFeatureList;
 import org.openimaj.feature.local.matcher.FastBasicKeypointMatcher;
 import org.openimaj.feature.local.matcher.MatchingUtilities;
 import org.openimaj.feature.local.matcher.consistent.ConsistentLocalFeatureMatcher2d;
+import org.openimaj.image.Image;
 import org.openimaj.image.DisplayUtilities.ImageComponent;
 import org.openimaj.image.FImage;
 import org.openimaj.image.ImageUtilities;
@@ -34,6 +35,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.AttributedString;
+
 /**
  * David Rodgers
  */
@@ -76,9 +79,10 @@ public class ObjectDetection implements KeyListener, VideoDisplayListener<MBFIma
             @Override
             public void render(final MBFImageRenderer renderer, final Matrix transform, final Rectangle rectangle) {
                 if (this.toRender == null) {
+
                     this.toRender =
                             new XuggleVideo(ObjectDetection.class
-                                    .getResource("/org/openimaj/demos/tutorial4/resized2.mkv"), true);
+                                    .getResource("/org/openimaj/demos/tutorial4/resized.mkv"), true);
                     //this.toRender = new XuggleVideo(
                     //        org.openimaj.demos.video.VideoSIFT.class.getResource("/org/openimaj/demos/video/keyboardcat.flv"), true);
                     this.renderToBounds = TransformUtilities.makeTransform(new Rectangle(0, 0, this.toRender.getWidth(),
@@ -152,7 +156,7 @@ public class ObjectDetection implements KeyListener, VideoDisplayListener<MBFIma
         //this.videoFrame = VideoDisplay.createVideoDisplay(capture, this.vidPanel);
         this.vidPanel.setBorder(BorderFactory.createTitledBorder("Video from File"));
         XuggleVideo xuggleVid =
-                new XuggleVideo(ObjectDetection.class.getResource("/org/openimaj/demos/tutorial4/resized2.mkv"), true);
+                new XuggleVideo(ObjectDetection.class.getResource("/org/openimaj/demos/tutorial4/resized.mkv"), true);
         this.videoFrame = VideoDisplay.createVideoDisplay(xuggleVid, this.vidPanel);
         final int height = 240;
         final int width = 320;
@@ -278,7 +282,12 @@ public class ObjectDetection implements KeyListener, VideoDisplayListener<MBFIma
                 }
 
                 this.matchPanel.setBorder(BorderFactory.createTitledBorder("Matches - Found Bacteria"));
+                renderer.drawText(new AttributedString("Bacteria"), 30, 70);
 
+                Rectangle rectangle = new Rectangle();
+                rectangle.setBounds(25, 35, 80, 150);
+                renderer.drawShape(rectangle, 3, RGBColour.YELLOW);
+                this.videoFrame.togglePause();
                 matches = MatchingUtilities
                         .drawMatches(this.modelImage, capImg, this.matcher.getMatches(), RGBColour.RED);
             }
