@@ -1,0 +1,1 @@
+The original image had 484 frames and took 1694 milli seconds and our new video had 257 frames and took 1086 milli seconds
