@@ -1,0 +1,14 @@
+
+MongoDB API calls
+
+send data to yeastdata database in test-collection:
+
+$curl -H "Content-Type: application/json" -X POST -d '{"key":"value"}' https://api.mlab.com/api/1/databases/yeastdata/collections/test-collection?apiKey=rxNyrlJP9OVsJv6KPmB0lH1SnwYi438I
+
+Potential video example:
+
+video name/id = video#1
+video data = linei (for each line sent/recieved)
+
+curl -H "Content-Type: application/json" -X POST -d '{"_id":"video#1","linei+1":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","linei+2":"BBBBBBBBBBBBBBBBBBBBBBBBB","linei+3":"CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"}' https://api.mlab.com/api/1/databases/yeastdata/collections/test-collection?apiKey=rxNyrlJP9OVsJv6KPmB0lH1SnwYi438I
+

@@ -14,7 +14,6 @@ import java.util.Properties;
 public class SimpleProducer {
     private static Producer<Integer, String> producer;
     private final Properties properties = new Properties();
-
     public SimpleProducer() {
         properties.put("metadata.broker.list", "localhost:9092");
         properties.put("serializer.class", "kafka.serializer.StringEncoder");
@@ -27,6 +26,7 @@ public class SimpleProducer {
     public static void EncodeVideo(String file, String topic){
         String encodedString = null;
         InputStream inputStream = null;
+
         try {
             inputStream = new FileInputStream(file);
         } catch (Exception e) {
@@ -119,6 +119,7 @@ public class SimpleProducer {
             KeyedMessage<Integer, String> data = new KeyedMessage<Integer, String>(topic, parts[i]);
             System.out.println(data.message());
             producer.send(data);
+
             System.out.println("File Sent");
             br.close();
 
@@ -128,11 +129,14 @@ public class SimpleProducer {
     }
 
     public static void main(String args[]) {
-        SimpleProducer sp = new SimpleProducer();
-        String topic = "Group01Topic";
-        SendFrames("output/realFrames", topic);
-        sp.SendText("output/features.txt",topic);
-        sp.SendText("output/metadata.txt",topic);
+        new SimpleProducer();
+        String topic = args[0];
+        String sample = args[1];
+        EncodeVideo(sample,topic);
+
+//        SendFrames("output/realFrames", topic);
+//        SendText("output/features.txt",topic);
+//        SendText("output/metadata.txt",topic);
         producer.close();
     }
 }
