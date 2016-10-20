@@ -13,11 +13,19 @@ import java.net.URL;
 
 public class httprequest {
     private HttpURLConnection connection = null;
+    private URL url = null;
+
+    httprequest(String urlstring) {
+        try {
+            url = new URL(urlstring);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void sendData(String parameters) {
         try {
-            URL url = new URL("https://api.mlab.com/api/1/databases/yeastdata" +
-                    "/collections/test-collection?apiKey=rxNyrlJP9OVsJv6KPmB0lH1SnwYi438I");
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");

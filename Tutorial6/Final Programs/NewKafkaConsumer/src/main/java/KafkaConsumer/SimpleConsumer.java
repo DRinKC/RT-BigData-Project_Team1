@@ -15,6 +15,8 @@ public class SimpleConsumer {
     private final String topic;
     int framecount;
     int textfile;
+    private final String MONGOURL = "https://api.mlab.com/api/1/databases/yeastdata" +
+            "/collections/test-collection?apiKey=rxNyrlJP9OVsJv6KPmB0lH1SnwYi438I";
 
     public SimpleConsumer(String zookeeper, String groupId, String t) {
         Properties props = new Properties();
@@ -40,7 +42,7 @@ public class SimpleConsumer {
             System.out.println("Created File");
 
             // send data to mongo
-            httprequest http = new httprequest();
+            httprequest http = new httprequest(MONGOURL);
             // generate random  video number
             Random rand = new Random();
             int n = rand.nextInt(100);
