@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/image-local-features-1.4-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bridj-0.6.2.jar.zip!/" />
+      <root url="jar://$PROJECT_DIR$/lib/data-scraping-1.4-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/image-feature-extraction-1.4-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/core-video-capture-1.4-SNAPSHOT-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/core-video-capture-1.4-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bridj-0.6.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

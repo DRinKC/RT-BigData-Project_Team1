@@ -1,0 +1,7 @@
+CONFUSION MATRIX: 
+1.0  0.0  0.0  
+0.0  1.0  0.0  
+0.0  0.0  1.0  
+F-MEASURE: 1.0
+RECALL: 1.0
+PRECISION: 1.0
