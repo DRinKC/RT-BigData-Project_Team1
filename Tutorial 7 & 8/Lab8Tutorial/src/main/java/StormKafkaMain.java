@@ -9,6 +9,7 @@ import org.apache.storm.kafka.KeyValueSchemeAsMultiScheme;
 import org.apache.storm.kafka.bolt.KafkaBolt;
 import org.apache.storm.kafka.bolt.mapper.FieldNameBasedTupleToKafkaMapper;
 import org.apache.storm.kafka.bolt.selector.DefaultTopicSelector;
+import org.apache.storm.spout.SchemeAsMultiScheme;
 import org.apache.storm.topology.TopologyBuilder;
 import org.apache.storm.tuple.Fields;
 
@@ -18,9 +19,12 @@ import java.util.Properties;
  * Created by David on 10-10-16
  */
 public class StormKafkaMain {
-    private static final String KAFKA_TOPIC ="Group01Topic";
-    private static final String KAFKA_TOPIC_B = "Group01";
+    private static String KAFKA_TOPIC;
+    private static String KAFKA_TOPIC_B;
     public static void main(String[] args) {
+        KAFKA_TOPIC = args[0];
+        KAFKA_TOPIC_B = args[1];
+
         // TODO Auto-generated method stub
         BasicConfigurator.configure();
 
@@ -28,7 +32,7 @@ public class StormKafkaMain {
         {
             try {
                 StormSubmitter.submitTopology(
-                        args[0],
+                        args[2],
                         createConfig(false),
                         createTopology());
             } catch (Exception e) {
@@ -60,12 +64,14 @@ public class StormKafkaMain {
                 KAFKA_TOPIC,
                 "/kafka",
                 "KafkaSpout");
+            kafkaConf.scheme = new KeyValueSchemeAsMultiScheme(new KafkaBoltKeyValueScheme());
+        //kafkaConf.scheme = new SchemeAsMultiScheme(new StringScheme());
+
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("acks", "1");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        kafkaConf.scheme = new KeyValueSchemeAsMultiScheme(new KafkaBoltKeyValueScheme());
         KafkaBolt bolt = new KafkaBolt()
                 .withProducerProperties(props)
                 .withTopicSelector(new DefaultTopicSelector(KAFKA_TOPIC_B))

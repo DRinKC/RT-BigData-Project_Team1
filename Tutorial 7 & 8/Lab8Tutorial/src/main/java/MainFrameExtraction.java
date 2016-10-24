@@ -47,15 +47,15 @@ public class MainFrameExtraction extends BaseBasicBolt {
             else if (dividedData[0].contains("MT"))
                 dataToSend = "NewLength: "+dividedData[1];
             if (dataToSend != null)
-                basicOutputCollector.emit(new Values("metadata", dataToSend));
+                basicOutputCollector.emit(new Values(dataToSend));
         }
         else
         {
-            basicOutputCollector.emit(new Values(tuple.getValues()));
+            basicOutputCollector.emit(new Values(tuple.getValueByField("Data").toString()));
         }
     }
 
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields("DataLabel", "DataValue"));
+        declarer.declare(new Fields("message"));
     }
 }

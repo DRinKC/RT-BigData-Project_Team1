@@ -34,11 +34,8 @@ public class PreProcessingBolt extends BaseBasicBolt {
     public void execute(Tuple input, BasicOutputCollector collector) {
 
         try {
-            String inputData1 = input.getString(0);
-            System.out.println("First part of Tuple: "+inputData1);
-            String inputData2 = input.getString(1);
-            System.out.println("Second part of Tuple: "+inputData2);
-            String[] dataToSend = inputData2.split(";");
+            String inputData = input.getString(0);
+            String[] dataToSend = inputData.split(";");
             for (int i = 0; i < dataToSend.length; i++) {
                 if (dataToSend[i].contains(":")) // contains metadata
                     collector.emit(new Values("metadata", dataToSend[i]));

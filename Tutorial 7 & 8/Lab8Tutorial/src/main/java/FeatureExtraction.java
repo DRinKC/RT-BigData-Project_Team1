@@ -33,7 +33,7 @@ public class FeatureExtraction extends BaseBasicBolt {
         }
         else
         {
-            basicOutputCollector.emit(new Values(tuple.getValues()));
+            basicOutputCollector.emit(new Values("metadata", tuple.getValueByField("Data").toString()));
         }
     }
 
